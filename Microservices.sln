@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{08
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{EC69DCE2-03EF-4790-8341-EA7983F033F6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeCourse.API.Catalog", "Services\Catalog\Services.API.Catalog\FreeCourse.API.Catalog.csproj", "{15E0C229-42A7-41E1-9D50-8497CA57084C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeCourse.API.Catalog", "Services\Catalog\FreeCourse.API.Catalog\FreeCourse.API.Catalog.csproj", "{15E0C229-42A7-41E1-9D50-8497CA57084C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5D223235-E9E9-458A-99D7-7F7C26982145}"
 	ProjectSection(SolutionItems) = preProject
