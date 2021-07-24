@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
     "IIS Express": {
@@ -9,14 +9,15 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "FreeCourse.API.PhotoStock": {
+    "FreeCource.API.Basket": {
       "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "launchBrowser": false,
       "launchUrl": "swagger",
+      "applicationUrl": "http://localhost:5013",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "dotnetRunMessages": "true",
-      "applicationUrl": "http://localhost:5012"
+      }
     }
   }
 }

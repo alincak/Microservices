@@ -1,4 +1,5 @@
 Services
 -API.Catalog => 5011
 -API.PhotoStock => 5012
+-API.Basket => 5013
 IdentityServer => 5001
