@@ -24,6 +24,8 @@ namespace FreeCource.API.Basket.Controllers
     [HttpGet]
     public async Task<IActionResult> Get()
     {
+      var claims = User.Claims;
+
       var basket = await _basketService.Get(_sharedIdentityService.GetUserId);
       if (basket == null)
       {
