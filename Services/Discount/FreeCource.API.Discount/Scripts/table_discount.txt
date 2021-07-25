@@ -4,6 +4,5 @@
 	rate smallint NOT NULL,
 	code varchar(50) NOT NULL,
 	createddate timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	CONSTRAINT discount_un UNIQUE (userid),
 	CONSTRAINT discount_pk PRIMARY KEY (id)
 );
