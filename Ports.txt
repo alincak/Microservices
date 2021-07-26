@@ -3,4 +3,5 @@ Services
 ---API.PhotoStock => 5012
 ---API.Basket => 5013
 ---API.Discount => 5014
+---API.Order => 5015
 IdentityServer => 5001
