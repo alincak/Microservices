@@ -7,8 +7,7 @@ namespace FreeCource.API.Order.Infrastructure
     public const string DEFAULT_SCHEMA = "ordering";
 
     public OrderDbContext(DbContextOptions<OrderDbContext> options) : base(options)
-    { 
-      
+    {  
     }
 
     public DbSet<Domain.OrderAggregate.Order> Orders { get; set; }
