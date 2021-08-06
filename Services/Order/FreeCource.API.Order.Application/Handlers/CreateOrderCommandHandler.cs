@@ -3,7 +3,6 @@ using FreeCource.API.Order.Application.Dtos;
 using FreeCource.API.Order.Domain.OrderAggregate;
 using FreeCource.API.Order.Infrastructure;
 using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 

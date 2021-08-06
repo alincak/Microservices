@@ -9,6 +9,10 @@ namespace FreeCource.API.Order.Domain.OrderAggregate
     public string PictureUrl { get; private set; }
     public decimal Price { get; private set; }
 
+    public OrderItem()
+    {
+    }
+
     public OrderItem(string productId, string productName, string pictureUrl, decimal price)
     {
       ProductId = productId;
