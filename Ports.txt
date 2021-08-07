@@ -8,3 +8,5 @@ Services
 IdentityServer => 5001
 Gateways
 ---FreeCourse.Gateway => 5000
+Client
+---Web => 5010
