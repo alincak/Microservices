@@ -1,6 +1,3 @@
-using FreeCource.API.Basket.Services;
-using FreeCource.API.Basket.Settings;
-using FreeCourse.Shared.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -9,11 +6,10 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace FreeCource.API.Basket
+namespace FreeCource.API.FakePayment
 {
   public class Startup
   {
@@ -29,7 +25,7 @@ namespace FreeCource.API.Basket
     {
       JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
 
-      services.AddControllers(options => 
+      services.AddControllers(options =>
       {
         var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
         options.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
@@ -38,31 +34,13 @@ namespace FreeCource.API.Basket
       services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
       {
         options.Authority = Configuration["IdentityServerUrl"];
-        options.Audience = "resource_basket";
+        options.Audience = "resource_payment";
         options.RequireHttpsMetadata = false;
-      });
-
-      services.AddHttpContextAccessor();
-      services.AddScoped<ISharedIdentityService, SharedIdentityService>();
-      services.AddScoped<IBasketService, BasketService>();
-
-      services.Configure<RedisSettings>(Configuration.GetSection("RedisSettings"));
-      services.AddSingleton<IRedisSettings>(sp =>
-      {
-        return sp.GetRequiredService<IOptions<RedisSettings>>().Value;
-      });
-
-      services.AddSingleton<IRedisService>(sp =>
-      {
-        var redisSettings = sp.GetRequiredService<IOptions<RedisSettings>>().Value;
-        var redisService = new RedisService(redisSettings.Host, redisSettings.Port);
-
-        return redisService;
       });
 
       services.AddSwaggerGen(c =>
       {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "FreeCource.API.Basket", Version = "v1" });
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "FreeCource.API.FakePayment", Version = "v1" });
       });
     }
 
@@ -73,7 +51,7 @@ namespace FreeCource.API.Basket
       {
         app.UseDeveloperExceptionPage();
         app.UseSwagger();
-        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FreeCource.API.Basket v1"));
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FreeCource.API.FakePayment v1"));
       }
 
       app.UseRouting();
