@@ -4,4 +4,7 @@ Services
 ---API.Basket => 5013
 ---API.Discount => 5014
 ---API.Order => 5015
+---API.FakePayment => 5016
 IdentityServer => 5001
+Gateways
+---FreeCourse.Gateway => 5000
