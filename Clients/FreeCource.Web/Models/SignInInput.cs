@@ -9,6 +9,6 @@ namespace FreeCource.Web.Models
     [Display(Name = "Şifreniz")]
     public string Password { get; set; }
     [Display(Name = "Beni hatırla")]
-    public string IsRemember { get; set; }
+    public bool IsRemember { get; set; }
   }
 }
