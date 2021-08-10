@@ -1,7 +1,6 @@
 using FreeCource.Web.Configurations;
 using FreeCource.Web.Services;
 using FreeCource.Web.Services.Interfaces;
-using FreeCourse.Shared.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,9 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FreeCource.Web
 {
@@ -32,6 +28,11 @@ namespace FreeCource.Web
 
       services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
       services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
+
+      services.AddHttpClient<IUserService, UserService>(opt => {
+        var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
+        opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
+      });
 
       services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opts =>
