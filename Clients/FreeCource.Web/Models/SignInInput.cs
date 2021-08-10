@@ -4,6 +4,7 @@ namespace FreeCource.Web.Models
 {
   public class SigninInput
   {
+    [Required]
     [Display(Name = "Email adresiniz")]
     public string Email { get; set; }
     [Display(Name = "Şifreniz")]
