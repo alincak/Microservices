@@ -1,4 +1,5 @@
 using FreeCource.Web.Configurations;
+using FreeCource.Web.Handlers;
 using FreeCource.Web.Services;
 using FreeCource.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -32,7 +33,7 @@ namespace FreeCource.Web
       services.AddHttpClient<IUserService, UserService>(opt => {
         var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
         opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
-      });
+      }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
       services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opts =>
