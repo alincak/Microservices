@@ -1,5 +1,6 @@
 using FreeCource.Web.Configurations;
 using FreeCource.Web.Handlers;
+using FreeCource.Web.Helpers;
 using FreeCource.Web.Services;
 using FreeCource.Web.Services.Interfaces;
 using FreeCourse.Shared.Services;
@@ -33,6 +34,7 @@ namespace FreeCource.Web
       services.AddScoped<ResourceOwnerPasswordTokenHandler>();
       services.AddScoped<ClientCredentialTokenHandler>();
       services.AddScoped<ISharedIdentityService, SharedIdentityService>();
+      services.AddSingleton<PhotoHelper>();
 
       services.AddHttpContextAccessor();
       services.AddAccessTokenManagement();

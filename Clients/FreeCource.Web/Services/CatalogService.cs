@@ -123,7 +123,7 @@ namespace FreeCource.Web.Services
         courseUpdateInput.Picture = resultPhotoService.Url;
       }
 
-      var response = await _client.PutAsJsonAsync<CourseUpdateInput>("courses", courseUpdateInput);
+      var response = await _client.PutAsJsonAsync("courses", courseUpdateInput);
 
       return response.IsSuccessStatusCode;
     }
