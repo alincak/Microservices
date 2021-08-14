@@ -2,6 +2,7 @@ using FreeCource.Web.Configurations;
 using FreeCource.Web.Handlers;
 using FreeCource.Web.Services;
 using FreeCource.Web.Services.Interfaces;
+using FreeCourse.Shared.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,6 +26,7 @@ namespace FreeCource.Web
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddScoped<ResourceOwnerPasswordTokenHandler>();
+      services.AddScoped<ISharedIdentityService, SharedIdentityService>();
 
       services.AddHttpContextAccessor();
       services.AddHttpClient<IIdentityService, IdentityService>();
