@@ -25,16 +25,19 @@ namespace FreeCource.Web
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddScoped<ResourceOwnerPasswordTokenHandler>();
-      services.AddScoped<ISharedIdentityService, SharedIdentityService>();
-
-      services.AddHttpContextAccessor();
-      services.AddHttpClient<IIdentityService, IdentityService>();
-
       services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
       services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
 
       var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
+
+      services.AddScoped<ResourceOwnerPasswordTokenHandler>();
+      services.AddScoped<ClientCredentialTokenHandler>();
+      services.AddScoped<ISharedIdentityService, SharedIdentityService>();
+
+      services.AddHttpContextAccessor();
+
+      services.AddHttpClient<IIdentityService, IdentityService>();
+      services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
 
       services.AddHttpClient<IUserService, UserService>(opt => {
         opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
@@ -42,7 +45,7 @@ namespace FreeCource.Web
 
       services.AddHttpClient<ICatalogService, CatalogService>(opt => {
         opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
-      });
+      }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
 
       services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opts =>
