@@ -32,10 +32,15 @@ namespace FreeCource.Web
       services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
       services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
 
+      var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
+
       services.AddHttpClient<IUserService, UserService>(opt => {
-        var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
         opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
       }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+      services.AddHttpClient<ICatalogService, CatalogService>(opt => {
+        opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
+      });
 
       services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opts =>
