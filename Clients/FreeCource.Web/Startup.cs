@@ -35,6 +35,7 @@ namespace FreeCource.Web
       services.AddScoped<ISharedIdentityService, SharedIdentityService>();
 
       services.AddHttpContextAccessor();
+      services.AddAccessTokenManagement();
 
       services.AddHttpClient<IIdentityService, IdentityService>();
       services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
