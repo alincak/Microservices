@@ -1,7 +1,9 @@
+using FluentValidation.AspNetCore;
 using FreeCource.Web.Configurations;
 using FreeCource.Web.Extensions;
 using FreeCource.Web.Handlers;
 using FreeCource.Web.Helpers;
+using FreeCource.Web.Validators;
 using FreeCourse.Shared.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -48,7 +50,7 @@ namespace FreeCource.Web
       });
 
       services.AddControllersWithViews()
-        .AddFluentValidationServices();
+        .AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<CourseCreateInputValidator>());
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

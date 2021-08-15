@@ -3,8 +3,8 @@
   public class BasketItemDto
   {
     public int Quantity { get; set; } //şimdilik sabit 1 ama kalsın.
-    public string CourceId { get; set; }
-    public string CourceName { get; set; }
+    public string CourseId { get; set; }
+    public string CourseName { get; set; }
     public decimal Price { get; set; }
   }
 }
