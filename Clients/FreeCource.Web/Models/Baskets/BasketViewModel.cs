@@ -8,7 +8,7 @@ namespace FreeCource.Web.Models.Baskets
   {
     public BasketViewModel()
     {
-      _basketItems = new List<BasketItemViewModel>();
+      _items = new List<BasketItemViewModel>();
     }
 
     public string UserId { get; set; }
@@ -16,32 +16,32 @@ namespace FreeCource.Web.Models.Baskets
     public string DiscountCode { get; set; }
 
     public int? DiscountRate { get; set; }
-    private List<BasketItemViewModel> _basketItems;
+    private List<BasketItemViewModel> _items;
 
-    public List<BasketItemViewModel> BasketItems
+    public List<BasketItemViewModel> Items
     {
       get
       {
         if (HasDiscount)
         {
           //Örnek kurs fiyat 100 TL indirim %10
-          _basketItems.ForEach(x =>
+          _items.ForEach(x =>
           {
             var discountPrice = x.Price * ((decimal)DiscountRate.Value / 100);
             x.AppliedDiscount(Math.Round(x.Price - discountPrice, 2));
           });
         }
-        return _basketItems;
+        return _items;
       }
       set
       {
-        _basketItems = value;
+        _items = value;
       }
     }
 
     public decimal TotalPrice
     {
-      get => _basketItems.Sum(x => x.GetCurrentPrice);
+      get => _items.Sum(x => x.GetCurrentPrice);
     }
 
     public bool HasDiscount

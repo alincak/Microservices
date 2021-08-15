@@ -36,6 +36,7 @@ namespace FreeCource.API.Basket.Controllers
     [HttpPost]
     public async Task<IActionResult> Edit(BasketDto basketDto)
     {
+      basketDto.UserId = _sharedIdentityService.GetUserId;
       var status = await _basketService.SaveOrUpdate(basketDto);
 
       return status

@@ -14,10 +14,10 @@ namespace FreeCource.Web.Services
     private readonly HttpClient _httpClient;
     private readonly IDiscountService _discountService;
 
-    public BasketService(HttpClient httpClient, IDiscountService discountService)
+    public BasketService(HttpClient httpClient/*, IDiscountService discountService*/)
     {
       _httpClient = httpClient;
-      _discountService = discountService;
+      //_discountService = discountService;
     }
 
     public async Task AddBasketItem(BasketItemViewModel basketItemViewModel)
@@ -26,16 +26,16 @@ namespace FreeCource.Web.Services
 
       if (basket != null)
       {
-        if (!basket.BasketItems.Any(x => x.CourseId == basketItemViewModel.CourseId))
+        if (!basket.Items.Any(x => x.CourseId == basketItemViewModel.CourseId))
         {
-          basket.BasketItems.Add(basketItemViewModel);
+          basket.Items.Add(basketItemViewModel);
         }
       }
       else
       {
         basket = new BasketViewModel();
 
-        basket.BasketItems.Add(basketItemViewModel);
+        basket.Items.Add(basketItemViewModel);
       }
 
       await SaveOrUpdate(basket);
@@ -43,22 +43,22 @@ namespace FreeCource.Web.Services
 
     public async Task<bool> ApplyDiscount(string discountCode)
     {
-      await CancelApplyDiscount();
+      //await CancelApplyDiscount();
 
-      var basket = await Get();
-      if (basket == null)
-      {
-        return false;
-      }
+      //var basket = await Get();
+      //if (basket == null)
+      //{
+      //  return false;
+      //}
 
-      var hasDiscount = await _discountService.GetDiscount(discountCode);
-      if (hasDiscount == null)
-      {
-        return false;
-      }
+      //var hasDiscount = await _discountService.GetDiscount(discountCode);
+      //if (hasDiscount == null)
+      //{
+      //  return false;
+      //}
 
-      basket.ApplyDiscount(hasDiscount.Code, hasDiscount.Rate);
-      await SaveOrUpdate(basket);
+      //basket.ApplyDiscount(hasDiscount.Code, hasDiscount.Rate);
+      //await SaveOrUpdate(basket);
       return true;
     }
 
@@ -106,21 +106,21 @@ namespace FreeCource.Web.Services
         return false;
       }
 
-      var deleteBasketItem = basket.BasketItems.FirstOrDefault(x => x.CourseId == courseId);
+      var deleteBasketItem = basket.Items.FirstOrDefault(x => x.CourseId == courseId);
 
       if (deleteBasketItem == null)
       {
         return false;
       }
 
-      var deleteResult = basket.BasketItems.Remove(deleteBasketItem);
+      var deleteResult = basket.Items.Remove(deleteBasketItem);
 
       if (!deleteResult)
       {
         return false;
       }
 
-      if (!basket.BasketItems.Any())
+      if (!basket.Items.Any())
       {
         basket.DiscountCode = null;
       }
