@@ -1,7 +1,9 @@
 ﻿using FreeCource.Web.Models.Baskets;
+using FreeCource.Web.Models.Discounts;
 using FreeCource.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FreeCource.Web.Controllers
@@ -41,18 +43,18 @@ namespace FreeCource.Web.Controllers
       return RedirectToAction(nameof(Index));
     }
 
-    //public async Task<IActionResult> ApplyDiscount(DiscountApplyInput discountApplyInput)
-    //{
-    //  if (!ModelState.IsValid)
-    //  {
-    //    TempData["discountError"] = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).First();
-    //    return RedirectToAction(nameof(Index));
-    //  }
-    //  var discountStatus = await _basketService.ApplyDiscount(discountApplyInput.Code);
+    public async Task<IActionResult> ApplyDiscount(DiscountApplyInput discountApplyInput)
+    {
+      if (!ModelState.IsValid)
+      {
+        TempData["discountError"] = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).First();
+        return RedirectToAction(nameof(Index));
+      }
+      var discountStatus = await _basketService.ApplyDiscount(discountApplyInput.Code);
 
-    //  TempData["discountStatus"] = discountStatus;
-    //  return RedirectToAction(nameof(Index));
-    //}
+      TempData["discountStatus"] = discountStatus;
+      return RedirectToAction(nameof(Index));
+    }
 
     public async Task<IActionResult> CancelApplyDiscount()
     {

@@ -1,7 +1,6 @@
 ﻿using FreeCource.Web.Models.Baskets;
 using FreeCource.Web.Services.Interfaces;
 using FreeCourse.Shared.Dtos;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -14,10 +13,10 @@ namespace FreeCource.Web.Services
     private readonly HttpClient _httpClient;
     private readonly IDiscountService _discountService;
 
-    public BasketService(HttpClient httpClient/*, IDiscountService discountService*/)
+    public BasketService(HttpClient httpClient, IDiscountService discountService)
     {
       _httpClient = httpClient;
-      //_discountService = discountService;
+      _discountService = discountService;
     }
 
     public async Task AddBasketItem(BasketItemViewModel basketItemViewModel)
@@ -43,22 +42,22 @@ namespace FreeCource.Web.Services
 
     public async Task<bool> ApplyDiscount(string discountCode)
     {
-      //await CancelApplyDiscount();
+      await CancelApplyDiscount();
 
-      //var basket = await Get();
-      //if (basket == null)
-      //{
-      //  return false;
-      //}
+      var basket = await Get();
+      if (basket == null)
+      {
+        return false;
+      }
 
-      //var hasDiscount = await _discountService.GetDiscount(discountCode);
-      //if (hasDiscount == null)
-      //{
-      //  return false;
-      //}
+      var hasDiscount = await _discountService.GetDiscount(discountCode);
+      if (hasDiscount == null)
+      {
+        return false;
+      }
 
-      //basket.ApplyDiscount(hasDiscount.Code, hasDiscount.Rate);
-      //await SaveOrUpdate(basket);
+      basket.ApplyDiscount(hasDiscount.Code, hasDiscount.Rate);
+      await SaveOrUpdate(basket);
       return true;
     }
 
