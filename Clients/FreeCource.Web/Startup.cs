@@ -1,4 +1,5 @@
 using FreeCource.Web.Configurations;
+using FreeCource.Web.Extensions;
 using FreeCource.Web.Handlers;
 using FreeCource.Web.Helpers;
 using FreeCource.Web.Services;
@@ -29,8 +30,6 @@ namespace FreeCource.Web
       services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
       services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
 
-      var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
-
       services.AddScoped<ResourceOwnerPasswordTokenHandler>();
       services.AddScoped<ClientCredentialTokenHandler>();
       services.AddScoped<ISharedIdentityService, SharedIdentityService>();
@@ -39,20 +38,7 @@ namespace FreeCource.Web
       services.AddHttpContextAccessor();
       services.AddAccessTokenManagement();
 
-      services.AddHttpClient<IIdentityService, IdentityService>();
-      services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
-
-      services.AddHttpClient<IUserService, UserService>(opt => {
-        opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
-      }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
-
-      services.AddHttpClient<ICatalogService, CatalogService>(opt => {
-        opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
-      }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
-
-      services.AddHttpClient<IPhotoStockService, PhotoStockService>(opt => {
-        opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.PhotoStock.Path}");
-      }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+      services.AddHttpClientServices(Configuration);
 
       services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opts =>
