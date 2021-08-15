@@ -57,7 +57,7 @@
         <div class="card-body">
           <h5 class="card-title">Ödeme özet</h5>
           <table class="table table-striped">
-            @foreach (var item in ViewBag.basket.BasketItems as List<BasketItemViewModel>)
+            @foreach (var item in ViewBag.basket.Items as List<BasketItemViewModel>)
             {
               <tr>
                 <td>@item.CourseName</td>
