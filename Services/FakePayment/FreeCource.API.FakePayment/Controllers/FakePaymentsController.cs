@@ -1,4 +1,5 @@
-﻿using FreeCourse.Shared.BaseController;
+﻿using FreeCource.API.FakePayment.Models;
+using FreeCourse.Shared.BaseController;
 using FreeCourse.Shared.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace FreeCource.API.FakePayment.Controllers
     //}
 
     [HttpPost]
-    public IActionResult ReceivePayment()
+    public IActionResult ReceivePayment(PaymentDto paymentDto)
     {
       //  //paymentDto ile ödeme işlemi gerçekleştir.
       //  var sendEndpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:create-order-service"));
