@@ -40,6 +40,11 @@ namespace FreeCource.Web.Extensions
       {
         opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Discount.Path}");
       }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+      services.AddHttpClient<IPaymentService, PaymentService>(opt =>
+      {
+        opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Payment.Path}");
+      }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
     }
   }
 }
