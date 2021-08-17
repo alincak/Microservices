@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace FreeCource.API.FakePayment.Models
+﻿namespace FreeCource.API.FakePayment.Models
 {
   public class PaymentDto
   {
@@ -12,5 +7,6 @@ namespace FreeCource.API.FakePayment.Models
     public string Expiration { get; set; }
     public string CVV { get; set; }
     public decimal TotalPrice { get; set; }
+    public OrderDto Order { get; set; }
   }
 }
