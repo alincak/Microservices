@@ -1,7 +1,11 @@
 ﻿using FreeCource.API.FakePayment.Models;
 using FreeCourse.Shared.BaseController;
 using FreeCourse.Shared.Dtos;
+using FreeCourse.Shared.Messages;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace FreeCource.API.FakePayment.Controllers
 {
@@ -9,42 +13,43 @@ namespace FreeCource.API.FakePayment.Controllers
   [ApiController]
   public class FakePaymentsController : CustomBaseController
   {
-    //private readonly ISendEndpointProvider _sendEndpointProvider;
+    private readonly ISendEndpointProvider _sendEndpointProvider;
 
-    //public FakePaymentsController(ISendEndpointProvider sendEndpointProvider)
-    //{
-    //  _sendEndpointProvider = sendEndpointProvider;
-    //}
+    public FakePaymentsController(ISendEndpointProvider sendEndpointProvider)
+    {
+      _sendEndpointProvider = sendEndpointProvider;
+    }
 
     [HttpPost]
-    public IActionResult ReceivePayment(PaymentDto paymentDto)
+    public async Task<IActionResult> ReceivePayment(PaymentDto paymentDto)
     {
       //  //paymentDto ile ödeme işlemi gerçekleştir.
-      //  var sendEndpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:create-order-service"));
+      var sendEndpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:create-order-service"));
 
-      //  var createOrderMessageCommand = new CreateOrderMessageCommand();
+      var createOrderMessageCommand = new CreateOrderMessageCommand
+      {
+        BuyerId = paymentDto.Order.BuyerId,
+        Province = paymentDto.Order.Address.Province,
+        District = paymentDto.Order.Address.District,
+        Street = paymentDto.Order.Address.Street,
+        Line = paymentDto.Order.Address.Line,
+        ZipCode = paymentDto.Order.Address.ZipCode
+      };
 
-      //  createOrderMessageCommand.BuyerId = paymentDto.Order.BuyerId;
-      //  createOrderMessageCommand.Province = paymentDto.Order.Address.Province;
-      //  createOrderMessageCommand.District = paymentDto.Order.Address.District;
-      //  createOrderMessageCommand.Street = paymentDto.Order.Address.Street;
-      //  createOrderMessageCommand.Line = paymentDto.Order.Address.Line;
-      //  createOrderMessageCommand.ZipCode = paymentDto.Order.Address.ZipCode;
+      paymentDto.Order.OrderItems.ForEach(x =>
+      {
+        createOrderMessageCommand.OrderItems.Add(new CreateOrderMessageCommand.OrderItem
+        {
+          PictureUrl = x.PictureUrl,
+          Price = x.Price,
+          ProductId = x.ProductId,
+          ProductName = x.ProductName
+        });
+      });
 
-      //  paymentDto.Order.OrderItems.ForEach(x =>
-      //  {
-      //    createOrderMessageCommand.OrderItems.Add(new OrderItem
-      //    {
-      //      PictureUrl = x.PictureUrl,
-      //      Price = x.Price,
-      //      ProductId = x.ProductId,
-      //      ProductName = x.ProductName
-      //    });
-      //  });
+      await sendEndpoint.Send(createOrderMessageCommand);
 
-      //  await sendEndpoint.Send<CreateOrderMessageCommand>(createOrderMessageCommand);
-
-      return CreateResponse(Response<NoContent>.Success(200));
+      return CreateResponse(FreeCourse.Shared.Dtos.Response<NoContent>.Success(200));
     }
   }
 }
