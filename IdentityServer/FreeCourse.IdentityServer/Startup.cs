@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using FreeCourse.IdentityServer.Services;
+using FreeCourse.IdentityServer.Validations;
 
 namespace FreeCourse.IdentityServer
 {
@@ -57,6 +57,7 @@ namespace FreeCourse.IdentityServer
           .AddAspNetIdentity<ApplicationUser>();
 
       builder.AddResourceOwnerValidator<ResourceOwnerPasswordValidator>();
+      builder.AddExtensionGrantValidator<TokenExchangeExtensionGrantValidator>();
 
       // not recommended for production - you need to store your key material somewhere secure
       builder.AddDeveloperSigningCredential();
