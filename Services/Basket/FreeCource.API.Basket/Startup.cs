@@ -1,6 +1,8 @@
+using FreeCource.API.Basket.Consumers;
 using FreeCource.API.Basket.Services;
 using FreeCource.API.Basket.Settings;
 using FreeCourse.Shared.Services;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -43,6 +45,29 @@ namespace FreeCource.API.Basket
       });
 
       services.AddHttpContextAccessor();
+
+      services.AddMassTransit(x =>
+      {
+        x.AddConsumer<CourseNameChangedEventConsumer>();
+
+        //default port: 5672
+        x.UsingRabbitMq((context, cfg) =>
+        {
+          cfg.Host(Configuration["RabbitMQUrl"], "/", host =>
+          {
+            host.Username("guest");
+            host.Password("guest");
+          });
+
+          cfg.ReceiveEndpoint("course-name-changed-event-basket-service", e =>
+          {
+            e.ConfigureConsumer<CourseNameChangedEventConsumer>(context);
+          });
+        });
+      });
+
+      services.AddMassTransitHostedService();
+
       services.AddScoped<ISharedIdentityService, SharedIdentityService>();
       services.AddScoped<IBasketService, BasketService>();
 

@@ -76,7 +76,8 @@ namespace FreeCourse.API.Catalog.Services
       await _publishEndpoint.Publish(new CourseNameChangedEvent
       {
         CourseId = newCourse.Id,
-        UpdatedName = course.Name
+        UpdatedName = course.Name,
+        UserId = newCourse.UserId
       });
 
       return Response<NoContent>.Success(204);
