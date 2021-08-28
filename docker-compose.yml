@@ -26,7 +26,7 @@ services:
     image: basket_api_image
     build:
       context: .
-      dockerfile: Services/Basket/FreeCourse.API.Basket/Dockerfile
+      dockerfile: Services/Basket/FreeCource.API.Basket/Dockerfile
   photostock.api:
     image: photostock_api_image
     build:
@@ -36,17 +36,17 @@ services:
     image: discount_api_image
     build:
       context: .
-      dockerfile: Services/Discount/FreeCourse.API.Discount/Dockerfile
+      dockerfile: Services/Discount/FreeCource.API.Discount/Dockerfile
   fakepayment.api:
     image: fakepayment_api_image
     build:
       context: .
-      dockerfile: Services/FakePayment/FreeCourse.API.FakePayment/Dockerfile
+      dockerfile: Services/FakePayment/FreeCource.API.FakePayment/Dockerfile
   order.api:
     image: order_api_image
     build:
       context: .
-      dockerfile: Services/Order/FreeCourse.API.Order.API/Dockerfile
+      dockerfile: Services/Order/FreeCource.API.Order/Dockerfile
   gateway.api:
     image: gateway_api_image
     build:

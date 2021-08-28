@@ -2,11 +2,11 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim as build
 WORKDIR /app
 EXPOSE 80
 COPY Shared/Course.Shared/*.csproj Shared/Course.Shared/
-COPY Services/Discount/FreeCourse.API.Discount/*.csproj Services/Discount/FreeCourse.API.Discount/
-RUN dotnet restore Services/Discount/FreeCourse.API.Discount/*.csproj
+COPY Services/Discount/FreeCource.API.Discount/*.csproj Services/Discount/FreeCource.API.Discount/
+RUN dotnet restore Services/Discount/FreeCource.API.Discount/*.csproj
 COPY . .
-RUN dotnet publish Services/Discount/FreeCourse.API.Discount/*.csproj -c Release -o out
+RUN dotnet publish Services/Discount/FreeCource.API.Discount/*.csproj -c Release -o out
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim as runtime
 WORKDIR /app
 COPY --from=build /app/out .
-ENTRYPOINT [ "dotnet","FreeCourse.API.Discount.dll" ]
+ENTRYPOINT [ "dotnet","FreeCource.API.Discount.dll" ]
