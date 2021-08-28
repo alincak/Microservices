@@ -9,4 +9,4 @@ RUN dotnet publish Clients/FreeCource.Web/*.csproj -c Release -o out
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim as runtime
 WORKDIR /app
 COPY --from=build /app/out .
-ENTRYPOINT [ "dotnet","FreeCourse.Web.dll" ]
+ENTRYPOINT [ "dotnet","FreeCource.Web.dll" ]
