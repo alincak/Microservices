@@ -48,6 +48,6 @@ Kursa eklenen resim işlemlerini yürüten projedir. Bu proje özelinde herhangi
 <br><br>
 
 
-> **keywords;** EntityFrameworkCore, SqlServer, Redis, Ocelot, RabbitMQ, MongoDB, Npgsql, Domain driven design, CQRS Pattern, MediatR, Dapper
+> **keywords;** Docker, EntityFrameworkCore, SqlServer, Redis, Ocelot, RabbitMQ, MongoDB, Npgsql, Domain driven design, CQRS Pattern, MediatR, Dapper
 
 > iyi kodlamalar... :)
