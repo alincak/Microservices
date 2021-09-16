@@ -17,8 +17,8 @@ Servisler ve veritabanları Docker Container lar aracılığı ile ayağa kaldı
 - ### Gateway <br>
 Client isteklerini ilgili servislere yönlendirir. Bu yönlendirmeler için **Ocelot** kullanılmıştır.
 
-- ### Web <br>
-Client olarak yazılmıştır. 
+- ### Asp.Net Core MVC Web <br>
+Microservice'lerden almış olduğu dataları kullanıcıya gösterecek ve kullanıcı ile etkileşime geçmekten sorumlu olacak UI mikroservisimiz
 
 - ### Course.Shared <br>
 Tüm projenin ortak işlemlerinin yürütülmesinden sorumludur.
@@ -44,6 +44,10 @@ Sepet ödemesi işlemlerinin yapıldığı projedir. Gerçek bir işlem olmadı�
 - ### PhotoStock Service <br>
 Kursa eklenen resim işlemlerini yürüten projedir. Bu proje özelinde herhangi bir sunucu veya veritabanı işlemi yapılmamıştır. Eklenen resimler local olarak tutulmuştur.
 
+- ### Message Broker <br>
+    - Mesaj kuyruk sistemi olarak RabbitMQ kullanıyor.
+    - RabbitMQ ile haberleşmek için MassTransit kütüphanesini kullanıyor.
+    - RabbitMQ (MassTransit Library)
 
 <br><br>
 
